@@ -53,19 +53,3 @@ CREATE TABLE CAP_INDEX (
     PRIMARY KEY (Index_ID),
     FOREIGN KEY (Index_Bank_ID) references CAP_Bank(Bank_ID)
 );
-
-CREATE TABLE CAP_INDEX (
-    Index_ID int NOT NULL,
-    Index_Price_USD int NOT NULL,
-     Index_Price_ZAR int NOT NULL,
-	Index_Unit_First_Charge int,
-   Index_Surchage_Percentage int NOT NULL,
-    Index_Surchage_Limit int NOT NULL,
-    Index_Surchage_Price int,
-    Index_Unit_Last_Price int,
-	Index_Surchage_Final int,
-	Index_Tourism_Token varchar(200),
-    Index_Bank_ID int not null,
-    PRIMARY KEY (Index_ID),
-    FOREIGN KEY (Index_Bank_ID) references CAP_Bank(Bank_ID)
-);
