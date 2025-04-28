@@ -1,6 +1,5 @@
 package tmg.za.CapIndex.client;
 
-import tmg.za.CapIndex.shared.FieldVerifier;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -16,6 +15,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
+import tmg.za.CapIndex.shared.FieldVerifier;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -37,9 +38,9 @@ public class CapIndex implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-		final Button sendButton = new Button("Send");
+		final Button sendButton = new Button("Sends");
 		final TextBox nameField = new TextBox();
-		nameField.setText("GWT User");
+		nameField.setText("GWT Users");
 		final Label errorLabel = new Label();
 
 		// We can add style names to widgets
