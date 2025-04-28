@@ -1,3 +1,5 @@
+use mysql;
+
 CREATE TABLE CAP_COUNTRY (
     Country_ID int NOT NULL,
     Country_name varchar(255) NOT NULL,
@@ -41,9 +43,9 @@ insert into Cap_Bank values(10,'KeyCorp (KeyBank)','Cleveland',8,'41001039','KEY
 CREATE TABLE CAP_INDEX (
     Index_ID int NOT NULL,
     Index_Price_USD int NOT NULL,
-     Index_Price_ZAR int NOT NULL,
+    Index_Price_ZAR int NOT NULL,
 	Index_Unit_First_Charge int NOT NULL,
-   Index_Surchage_Percentage int NOT NULL,
+    Index_Surchage_Percentage int NOT NULL,
     Index_Surchage_Limit int NOT NULL,
     Index_Surchage_Price int NOT NULL,
     Index_Unit_Last_Price int NOT NULL,
@@ -52,4 +54,29 @@ CREATE TABLE CAP_INDEX (
     Index_Bank_ID int not null,
     PRIMARY KEY (Index_ID),
     FOREIGN KEY (Index_Bank_ID) references CAP_Bank(Bank_ID)
+);
+
+CREATE TABLE CAP_USER (
+    USER_ID varchar(255) NOT NULL,
+    USER_FIRST_NAME varchar(255) NOT NULL,
+    USER_LAST_NAME varchar(255) NOT NULL,
+    USER_CARD_NUMBER varchar(255) NOT NULL,
+    USER_BANK_ID int,
+    USER_LOYALTY_CREDIT double,
+    PRIMARY KEY (USER_ID),
+    FOREIGN KEY (USER_BANK_ID) references CAP_BANK(BANK_ID)
+);
+
+CREATE TABLE CAP_REWARD_HISTORY (
+    REWARD_ID varchar(255) NOT NULL,
+    REWARD_DESCRIPTION varchar(255) NOT NULL,
+    REWARD_TRANSACTION_TIME timestamp,
+    REWARD_USER_ID varchar(255),
+    REWARD_AMOUNT double,
+    REWARD_FINAL_AMOUNT double,
+    REWARD_APPLIED boolean,
+    REWARD_TOKEN_INDEX int,
+    PRIMARY KEY (REWARD_ID),
+    FOREIGN KEY (REWARD_USER_ID) references CAP_USER(USER_ID),
+    FOREIGN KEY (REWARD_TOKEN_INDEX) references CAP_INDEX(Index_ID)
 );
