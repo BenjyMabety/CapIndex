@@ -55,20 +55,27 @@ CREATE TABLE CAP_INDEX (
     Index_ID int NOT NULL,
 	Index_City_Name varchar(200) NOT NULL,
 	Index_State_ID int NOT NULL,
-    Index_Price_USD int NOT NULL,
-    Index_Price_ZAR int NOT NULL,
-	Index_Unit_First_Charge int,
-    Index_Surchage_Percentage int NOT NULL,
-    Index_Surchage_Limit int NOT NULL,
-    Index_Surchage_Price int,
-    Index_Unit_Last_Price int,
-	Index_Surchage_Final int,
+    Index_Price_USD double NOT NULL,
+    Index_Price_ZAR double NOT NULL,
+	Index_Unit_First_Charge double,
+    Index_Surcharge_Percentage double NOT NULL,
+    Index_Surcharge_Limit double NOT NULL,
+    Index_Surchage_Price double,
+    Index_Unit_Last_Price double,
+	Index_Surchage_Final double,
 	Index_Tourism_Token varchar(200),
     Index_Bank_ID int not null,
     PRIMARY KEY (Index_ID),
     FOREIGN KEY (Index_Bank_ID) references CAP_Bank(Bank_ID),
 	FOREIGN KEY (Index_State_ID) references CAP_STATE(State_ID)
 );
+);
+
+insert into CAP_INDEX (INDEX_ID,INDEX_CITY_NAME,INDEX_STATE_ID,INDEX_PRICE_USD,INDEX_PRICE_ZAR,INDEX_SURCHARGE_PERCENTAGE,INDEX_SURCHARGE_LIMIT,INDEX_BANK_ID) VALUES (1,'Virginia Beach',1,5.75,106.38,20,500,2);
+insert into CAP_INDEX (INDEX_ID,INDEX_CITY_NAME,INDEX_STATE_ID,INDEX_PRICE_USD,INDEX_PRICE_ZAR,INDEX_SURCHARGE_PERCENTAGE,INDEX_SURCHARGE_LIMIT,INDEX_BANK_ID) VALUES (2,'Las Vegas',2,5.40,99.90,10,500,2);
+insert into CAP_INDEX (INDEX_ID,INDEX_CITY_NAME,INDEX_STATE_ID,INDEX_PRICE_USD,INDEX_PRICE_ZAR,INDEX_SURCHARGE_PERCENTAGE,INDEX_SURCHARGE_LIMIT,INDEX_BANK_ID) VALUES (3,'Minneapolis',6,5.37,99.35,10,500,3);
+insert into CAP_INDEX (INDEX_ID,INDEX_CITY_NAME,INDEX_STATE_ID,INDEX_PRICE_USD,INDEX_PRICE_ZAR,INDEX_SURCHARGE_PERCENTAGE,INDEX_SURCHARGE_LIMIT,INDEX_BANK_ID) VALUES (4,'New York',4,5.31,98.24,10,500,4);
+
 
 CREATE TABLE CAP_USER (
     USER_ID varchar(255) NOT NULL,
