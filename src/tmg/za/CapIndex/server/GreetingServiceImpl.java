@@ -1,17 +1,21 @@
 package tmg.za.CapIndex.server;
 
-import tmg.za.CapIndex.client.GreetingService;
-import tmg.za.CapIndex.shared.FieldVerifier;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+import tmg.za.CapIndex.client.GreetingService;
+import tmg.za.CapIndex.client.GetAdminUser;
+import tmg.za.CapIndex.shared.FieldVerifier;
+import tmg.za.CapIndex.shared.MySQLConnection;
 
 /**
  * The server-side implementation of the RPC service.
  */
 @SuppressWarnings("serial")
 public class GreetingServiceImpl extends RemoteServiceServlet implements GreetingService {
+	MySQLConnection conn = new MySQLConnection();
 
 	public String greetServer(String input) throws IllegalArgumentException {
-		// Verify that the input is valid. 
+		// Verify that the input is valid.
 		if (!FieldVerifier.isValidName(input)) {
 			// If the input is not valid, throw an IllegalArgumentException back to
 			// the client.
@@ -41,5 +45,10 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 			return null;
 		}
 		return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+	}
+
+	public GetAdminUser authenticateUser(String user, String pass) {
+		// TODO Auto-generated method stub
+		return conn.authenticateUser(user, pass);
 	}
 }

@@ -11,9 +11,48 @@
     <servlet-class>tmg.za.CapIndex.server.GreetingServiceImpl</servlet-class>
   </servlet>
   
+   <servlet>
+    <servlet-name>locateServlet</servlet-name>
+    <servlet-class>tmg.za.CapIndex.server.LocationServiceImpl</servlet-class>
+  </servlet>
+  
+     <servlet>
+    <servlet-name>peopleServlet</servlet-name>
+    <servlet-class>tmg.za.CapIndex.server.PeopleServiceImpl</servlet-class>
+  </servlet>
+  
+   <servlet>
+    <servlet-name>adminServlet</servlet-name>
+    <servlet-class>tmg.za.CapIndex.server.AdminServiceImpl</servlet-class>
+  </servlet>
+  
+    <servlet>
+  <servlet-name>mySQLConnection</servlet-name>
+  <servlet-class>tmg.za.CapIndex.shared.MySQLConnection</servlet-class>
+</servlet>
+
+<servlet-mapping>
+  <servlet-name>mySQLConnection</servlet-name>
+  <url-pattern>/capindex/MySQLConnection</url-pattern>
+</servlet-mapping>
+  
   <servlet-mapping>
     <servlet-name>greetServlet</servlet-name>
     <url-pattern>/capindex/greet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>locateServlet</servlet-name>
+    <url-pattern>/capindex/locate</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>peopleServlet</servlet-name>
+    <url-pattern>/capindex/people</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>adminServlet</servlet-name>
+    <url-pattern>/capindex/admin</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->

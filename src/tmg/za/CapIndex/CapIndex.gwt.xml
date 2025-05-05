@@ -21,6 +21,7 @@
 
   <!-- Specify the app entry point class.                         -->
   <entry-point class='tmg.za.CapIndex.client.CapIndex'/>
+  <servlet class="tmg.za.CapIndex.shared.MySQLConnection" path="/MySQLConnection" />
 
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>

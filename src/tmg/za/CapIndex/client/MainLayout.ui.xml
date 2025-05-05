@@ -1,0 +1,26 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+	/* Add CSS here. See the GWT docs on UI Binder for more details */
+	.important {
+		font-weight: bold;
+	}
+	</ui:style>
+	<g:DockLayoutPanel>
+	<g:north size ='80'>
+	<g:Label ui:field="headerLabel">Cappuccino Index</g:Label>
+</g:north>
+	<g:west size="300">
+	<g:VerticalPanel ui:field="mainPanel">
+	</g:VerticalPanel>
+	</g:west>
+	<g:east size= "300">
+	<g:VerticalPanel ui:field="vWest">
+	</g:VerticalPanel>
+	</g:east>
+	<g:center>
+	 <g:SimplePanel ui:field="canvas"></g:SimplePanel>
+	</g:center>
+	</g:DockLayoutPanel>
+</ui:UiBinder> 
