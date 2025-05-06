@@ -12,4 +12,6 @@ public interface AdminServiceAsync {
 
 	void getRewardHistory(AsyncCallback<ArrayList<GetRewardHistory>> callback);
 
+	void getCapIndex(AsyncCallback<ArrayList<GetCapIndex>> callback);
+
 }

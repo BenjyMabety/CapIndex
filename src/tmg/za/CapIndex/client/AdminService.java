@@ -14,4 +14,6 @@ public interface AdminService extends RemoteService {
 
 	ArrayList<GetRewardHistory> getRewardHistory();
 
+	ArrayList<GetCapIndex> getCapIndex();
+
 }

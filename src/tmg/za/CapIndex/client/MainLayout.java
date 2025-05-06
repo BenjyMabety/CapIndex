@@ -11,6 +11,7 @@ import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -18,12 +19,15 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import tmg.za.CapIndex.shared.Resources;
+
 /**
  * 
  */
 public class MainLayout extends Composite {
 
 	private static MainLayoutUiBinder uiBinder = GWT.create(MainLayoutUiBinder.class);
+	Resources resources = GWT.create(Resources.class);
 
 	interface MainLayoutUiBinder extends UiBinder<Widget, MainLayout> {
 	}
@@ -34,20 +38,24 @@ public class MainLayout extends Composite {
 	SimplePanel canvas;
 	Login login;
 	@UiField
-	VerticalPanel vWest;
+	VerticalPanel vEast;
 	MenuBar menu = new MenuBar(true);
 	@UiField
 	Label headerLabel;
+	Image home;
 
 	public MainLayout() {
 		initWidget(uiBinder.createAndBindUi(this));
 		headerLabel.getElement().setAttribute("style",
 				"font-weight: bold;font-size:30px;text-align:center; color:grey;");
+
+		home = new Image(resources.home());
 		login = new Login();
 		mainPanel.add(login.getALogin());
 		login.getaSignOut().setVisible(false);
 		mainPanel.add(login.getaSignOut());
 		menu.setVisible(false);
+		home.setVisible(false);
 		login.getALogin().addClickHandler(new ClickHandler() {
 
 			@Override
@@ -67,7 +75,8 @@ public class MainLayout extends Composite {
 					login.getaSignOut().setVisible(true);
 					mainPanel.add(login.getUserName());
 					menu.setVisible(true);
-
+					home.setVisible(true);
+					mainPanel.add(home);
 				}
 			}
 		});
@@ -81,7 +90,18 @@ public class MainLayout extends Composite {
 				login.getALogin().setVisible(true);
 				canvas.clear();
 				menu.setVisible(false);
+				home.setVisible(false);
+				AdminCommands.getCapIndex(canvas);
 
+			}
+		});
+
+		home.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				AdminCommands.getCapIndex(canvas);
 			}
 		});
 
@@ -103,7 +123,9 @@ public class MainLayout extends Composite {
 		menu.addItem("People", peopleMenu);
 		menu.addItem("Administration", adminMenu);
 
-		vWest.add(menu);
+		vEast.add(menu);
+
+		AdminCommands.getCapIndex(canvas);
 
 	}
 

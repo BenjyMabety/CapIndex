@@ -11,12 +11,12 @@
 	<g:north size ='80'>
 	<g:Label ui:field="headerLabel">Cappuccino Index</g:Label>
 </g:north>
-	<g:west size="300">
+	<g:west size="100">
 	<g:VerticalPanel ui:field="mainPanel">
 	</g:VerticalPanel>
 	</g:west>
 	<g:east size= "300">
-	<g:VerticalPanel ui:field="vWest">
+	<g:VerticalPanel ui:field="vEast">
 	</g:VerticalPanel>
 	</g:east>
 	<g:center>

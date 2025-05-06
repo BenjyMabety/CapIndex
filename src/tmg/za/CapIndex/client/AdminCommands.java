@@ -205,4 +205,137 @@ public class AdminCommands {
 		return banks;
 	}
 
+	public static void getCapIndex(SimplePanel canvas) {
+
+		adminService.getCapIndex(new AsyncCallback<ArrayList<GetCapIndex>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onSuccess(ArrayList<GetCapIndex> result) {
+				// TODO Auto-generated method stub
+				CellTable<GetCapIndex> table = new CellTable<GetCapIndex>();
+				table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+
+				// Add a text column to show the name.
+				TextColumn<GetCapIndex> cityColumn = new TextColumn<GetCapIndex>() {
+					@Override
+					public String getValue(GetCapIndex object) {
+						return object.getCityName();
+					}
+				};
+				table.addColumn(cityColumn, "City Name");
+
+				TextColumn<GetCapIndex> stateColumn = new TextColumn<GetCapIndex>() {
+					@Override
+					public String getValue(GetCapIndex object) {
+						return String.valueOf(object.getStateName());
+					}
+				};
+				table.addColumn(stateColumn, "State");
+
+				TextColumn<GetCapIndex> usdPriceColumn = new TextColumn<GetCapIndex>() {
+					@Override
+					public String getValue(GetCapIndex object) {
+						return String.valueOf(object.getPriceUsd());
+					}
+				};
+				table.addColumn(usdPriceColumn, "USD/Cuppino Price");
+
+				TextColumn<GetCapIndex> zarPriceColumn = new TextColumn<GetCapIndex>() {
+					@Override
+					public String getValue(GetCapIndex object) {
+						return String.valueOf(object.getPriceZar());
+					}
+				};
+				table.addColumn(zarPriceColumn, "ZAR (18.5x)");
+
+				TextColumn<GetCapIndex> unitFirstPriceColumn = new TextColumn<GetCapIndex>() {
+					@Override
+					public String getValue(GetCapIndex object) {
+						return String.valueOf(object.getUnitFirstCharge());
+					}
+				};
+				table.addColumn(unitFirstPriceColumn, "Unit First Price");
+
+				TextColumn<GetCapIndex> surchargePercentColumn = new TextColumn<GetCapIndex>() {
+					@Override
+					public String getValue(GetCapIndex object) {
+						return String.valueOf(object.getSurchargePercentage());
+					}
+				};
+				table.addColumn(surchargePercentColumn, "Surcharge Percentage");
+
+				TextColumn<GetCapIndex> surchargeLimitColumn = new TextColumn<GetCapIndex>() {
+					@Override
+					public String getValue(GetCapIndex object) {
+						return String.valueOf(object.getSurchargeLimit());
+					}
+				};
+				table.addColumn(surchargeLimitColumn, "Surcharge Limitv/R");
+
+				TextColumn<GetCapIndex> surchargePrice = new TextColumn<GetCapIndex>() {
+					@Override
+					public String getValue(GetCapIndex object) {
+						return String.valueOf(object.getSurchargePrice());
+					}
+				};
+				table.addColumn(surchargePrice, "Surcharge Price");
+
+				TextColumn<GetCapIndex> lastPriceColumn = new TextColumn<GetCapIndex>() {
+					@Override
+					public String getValue(GetCapIndex object) {
+						return String.valueOf(object.getUnitLastPrice());
+					}
+				};
+				table.addColumn(lastPriceColumn, "Unit Last Price");
+
+				TextColumn<GetCapIndex> surchargeColumn = new TextColumn<GetCapIndex>() {
+					@Override
+					public String getValue(GetCapIndex object) {
+						return String.valueOf(object.getSurchargeFinal());
+					}
+				};
+				table.addColumn(surchargeColumn, "Surcharge");
+
+				TextColumn<GetCapIndex> tokenColumn = new TextColumn<GetCapIndex>() {
+					@Override
+					public String getValue(GetCapIndex object) {
+						return String.valueOf(object.getTourismToken());
+					}
+				};
+				table.addColumn(tokenColumn, "Tourism Token");
+
+				TextColumn<GetCapIndex> bankColumn = new TextColumn<GetCapIndex>() {
+					@Override
+					public String getValue(GetCapIndex object) {
+						return String.valueOf(object.getBankName());
+					}
+				};
+				table.addColumn(bankColumn, "Bank");
+
+				// Add a selection model to handle user selection.
+				final SingleSelectionModel<GetCapIndex> selectionModel = new SingleSelectionModel<GetCapIndex>();
+				table.setSelectionModel(selectionModel);
+				selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+					public void onSelectionChange(SelectionChangeEvent event) {
+						GetCapIndex selected = selectionModel.getSelectedObject();
+						if (selected != null) {
+							Window.alert("You selected: " + selected.getCityName());
+						}
+					}
+				});
+				table.setRowCount(result.size(), true);
+				table.setRowData(0, result);
+				canvas.setWidget(table);
+
+			}
+		});
+
+	}
+
 }
