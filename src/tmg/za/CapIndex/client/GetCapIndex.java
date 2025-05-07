@@ -7,14 +7,14 @@ public class GetCapIndex implements IsSerializable {
 	private String cityName;
 	private int stateId;
 	private String stateName;
-	private double priceUsd;
-	private double priceZar;
-	private double unitFirstCharge;
-	private double surchargePercentage;
-	private double surchargeLimit;
-	private double surchargePrice;
-	private double unitLastPrice;
-	private double surchargeFinal;
+	private String priceUsd;
+	private String priceZar;
+	private String unitFirstCharge;
+	private String surchargePercentage;
+	private String surchargeLimit;
+	private String surchargePrice;
+	private String unitLastPrice;
+	private String surchargeFinal;
 	private String tourismToken;
 	private int bankId;
 	private String bankName;
@@ -56,68 +56,12 @@ public class GetCapIndex implements IsSerializable {
 		this.stateName = stateName;
 	}
 
-	public double getPriceUsd() {
+	public String getPriceUsd() {
 		return priceUsd;
 	}
 
-	public void setPriceUsd(double priceUsd) {
+	public void setPriceUsd(String priceUsd) {
 		this.priceUsd = priceUsd;
-	}
-
-	public double getPriceZar() {
-		return priceZar;
-	}
-
-	public void setPriceZar(double priceZar) {
-		this.priceZar = priceZar;
-	}
-
-	public double getUnitFirstCharge() {
-		return unitFirstCharge;
-	}
-
-	public void setUnitFirstCharge(double unitFirstCharge) {
-		this.unitFirstCharge = unitFirstCharge;
-	}
-
-	public double getSurchargePercentage() {
-		return surchargePercentage;
-	}
-
-	public void setSurchargePercentage(double surchargePercentage) {
-		this.surchargePercentage = surchargePercentage;
-	}
-
-	public double getSurchargeLimit() {
-		return surchargeLimit;
-	}
-
-	public void setSurchargeLimit(double surchargeLimit) {
-		this.surchargeLimit = surchargeLimit;
-	}
-
-	public double getSurchargePrice() {
-		return surchargePrice;
-	}
-
-	public void setSurchargePrice(double surchargePrice) {
-		this.surchargePrice = surchargePrice;
-	}
-
-	public double getUnitLastPrice() {
-		return unitLastPrice;
-	}
-
-	public void setUnitLastPrice(double unitLastPrice) {
-		this.unitLastPrice = unitLastPrice;
-	}
-
-	public double getSurchargeFinal() {
-		return surchargeFinal;
-	}
-
-	public void setSurchargeFinal(double surchargeFinal) {
-		this.surchargeFinal = surchargeFinal;
 	}
 
 	public String getTourismToken() {
@@ -142,6 +86,62 @@ public class GetCapIndex implements IsSerializable {
 
 	public void setBankName(String bankName) {
 		this.bankName = bankName;
+	}
+
+	public String getPriceZar() {
+		return priceZar;
+	}
+
+	public void setPriceZar(String priceZar) {
+		this.priceZar = priceZar;
+	}
+
+	public String getUnitFirstCharge() {
+		return unitFirstCharge;
+	}
+
+	public void setUnitFirstCharge(String unitFirstCharge) {
+		this.unitFirstCharge = unitFirstCharge;
+	}
+
+	public String getSurchargePercentage() {
+		return surchargePercentage;
+	}
+
+	public void setSurchargePercentage(String surchargePercentage) {
+		this.surchargePercentage = surchargePercentage;
+	}
+
+	public String getSurchargeLimit() {
+		return surchargeLimit;
+	}
+
+	public void setSurchargeLimit(String surchargeLimit) {
+		this.surchargeLimit = surchargeLimit;
+	}
+
+	public String getSurchargePrice() {
+		return surchargePrice;
+	}
+
+	public void setSurchargePrice(String surchargePrice) {
+		this.surchargePrice = surchargePrice;
+	}
+
+	public String getUnitLastPrice() {
+		return unitLastPrice;
+	}
+
+	public void setUnitLastPrice(String unitLastPrice) {
+		this.unitLastPrice = unitLastPrice;
+	}
+
+	public String getSurchargeFinal() {
+		return surchargeFinal;
+	}
+
+	public void setSurchargeFinal(String surchargeFinal) {
+		this.surchargeFinal = surchargeFinal;
 	}
 
 }

@@ -43,6 +43,8 @@ public class MainLayout extends Composite {
 	@UiField
 	Label headerLabel;
 	Image home;
+	Image edit;
+	Image save;
 
 	public MainLayout() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -50,12 +52,16 @@ public class MainLayout extends Composite {
 				"font-weight: bold;font-size:30px;text-align:center; color:grey;");
 
 		home = new Image(resources.home());
+		edit = new Image(resources.edit());
+		save = new Image(resources.save());
 		login = new Login();
 		mainPanel.add(login.getALogin());
 		login.getaSignOut().setVisible(false);
 		mainPanel.add(login.getaSignOut());
 		menu.setVisible(false);
 		home.setVisible(false);
+		edit.setVisible(false);
+		save.setVisible(false);
 		login.getALogin().addClickHandler(new ClickHandler() {
 
 			@Override
@@ -76,7 +82,11 @@ public class MainLayout extends Composite {
 					mainPanel.add(login.getUserName());
 					menu.setVisible(true);
 					home.setVisible(true);
+					edit.setVisible(true);
+					save.setVisible(true);
 					mainPanel.add(home);
+					mainPanel.add(edit);
+					mainPanel.add(save);
 				}
 			}
 		});
@@ -91,7 +101,9 @@ public class MainLayout extends Composite {
 				canvas.clear();
 				menu.setVisible(false);
 				home.setVisible(false);
-				AdminCommands.getCapIndex(canvas);
+				edit.setVisible(false);
+				save.setVisible(false);
+				AdminCommands.getCapIndex(canvas, false);
 
 			}
 		});
@@ -101,7 +113,33 @@ public class MainLayout extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-				AdminCommands.getCapIndex(canvas);
+				AdminCommands.getCapIndex(canvas, false);
+			}
+		});
+
+		home.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				AdminCommands.getCapIndex(canvas, false);
+			}
+		});
+
+		edit.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				AdminCommands.getCapIndex(canvas, true);
+			}
+		});
+		save.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				AdminCommands.getCapIndex(canvas, false);
 			}
 		});
 
@@ -125,7 +163,7 @@ public class MainLayout extends Composite {
 
 		vEast.add(menu);
 
-		AdminCommands.getCapIndex(canvas);
+		AdminCommands.getCapIndex(canvas, false);
 
 	}
 

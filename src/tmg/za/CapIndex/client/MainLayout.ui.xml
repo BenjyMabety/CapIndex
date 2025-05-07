@@ -20,7 +20,9 @@
 	</g:VerticalPanel>
 	</g:east>
 	<g:center>
+	<g:ScrollPanel>
 	 <g:SimplePanel ui:field="canvas"></g:SimplePanel>
+	 </g:ScrollPanel>
 	</g:center>
 	</g:DockLayoutPanel>
 </ui:UiBinder> 
