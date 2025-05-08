@@ -19,6 +19,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import tmg.za.CapIndex.shared.MyFoo.MyStyle;
 import tmg.za.CapIndex.shared.Resources;
 
 /**
@@ -28,6 +29,7 @@ public class MainLayout extends Composite {
 
 	private static MainLayoutUiBinder uiBinder = GWT.create(MainLayoutUiBinder.class);
 	Resources resources = GWT.create(Resources.class);
+	AdminCommands adminCommands = new AdminCommands();
 
 	interface MainLayoutUiBinder extends UiBinder<Widget, MainLayout> {
 	}
@@ -42,12 +44,15 @@ public class MainLayout extends Composite {
 	MenuBar menu = new MenuBar(true);
 	@UiField
 	Label headerLabel;
+	@UiField
+	MyStyle style;
 	Image home;
 	Image edit;
 	Image save;
 
 	public MainLayout() {
 		initWidget(uiBinder.createAndBindUi(this));
+		setEnabled(true);
 		headerLabel.getElement().setAttribute("style",
 				"font-weight: bold;font-size:30px;text-align:center; color:grey;");
 
@@ -77,6 +82,7 @@ public class MainLayout extends Composite {
 			public void onClose(CloseEvent<PopupPanel> event) {
 				// TODO Auto-generated method stub
 				if (login.getUser() != null) {
+					setEnabled(false);
 					login.getALogin().setVisible(false);
 					login.getaSignOut().setVisible(true);
 					mainPanel.add(login.getUserName());
@@ -95,6 +101,7 @@ public class MainLayout extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
+				setEnabled(true);
 				mainPanel.remove(login.getUserName());
 				login.getaSignOut().setVisible(false);
 				login.getALogin().setVisible(true);
@@ -103,7 +110,7 @@ public class MainLayout extends Composite {
 				home.setVisible(false);
 				edit.setVisible(false);
 				save.setVisible(false);
-				AdminCommands.getCapIndex(canvas, false);
+				adminCommands.getCapIndex(canvas, false);
 
 			}
 		});
@@ -113,7 +120,7 @@ public class MainLayout extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-				AdminCommands.getCapIndex(canvas, false);
+				adminCommands.getCapIndex(canvas, false);
 			}
 		});
 
@@ -122,7 +129,7 @@ public class MainLayout extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-				AdminCommands.getCapIndex(canvas, false);
+				adminCommands.getCapIndex(canvas, false);
 			}
 		});
 
@@ -131,15 +138,16 @@ public class MainLayout extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-				AdminCommands.getCapIndex(canvas, true);
+				adminCommands.getCapIndex(canvas, true);
 			}
 		});
 		save.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
+
 				// TODO Auto-generated method stub
-				AdminCommands.getCapIndex(canvas, false);
+				adminCommands.setCapIndex(canvas);
 			}
 		});
 
@@ -153,8 +161,8 @@ public class MainLayout extends Composite {
 		peopleMenu.addItem("Administrators", PeopleCommands.getAdminUsersCommand(canvas));
 
 		MenuBar adminMenu = new MenuBar(false);
-		adminMenu.addItem("Banks", AdminCommands.getBanksCommand(canvas));
-		adminMenu.addItem("Reward History", AdminCommands.getRewardHistoryCommand(canvas));
+		adminMenu.addItem("Banks", adminCommands.getBanksCommand(canvas));
+		adminMenu.addItem("Reward History", adminCommands.getRewardHistoryCommand(canvas));
 
 		// Make a new menu bar, adding a few cascading menus to it.
 		menu.addItem("Location", locationMenu);
@@ -163,7 +171,13 @@ public class MainLayout extends Composite {
 
 		vEast.add(menu);
 
-		AdminCommands.getCapIndex(canvas, false);
+		adminCommands.getCapIndex(canvas, false);
+
+	}
+
+	void setEnabled(boolean enabled) {
+		getElement().addClassName(enabled ? style.enabledBall() : style.enabledSpace());
+		getElement().removeClassName(enabled ? style.enabledSpace() : style.enabledBall());
 
 	}
 

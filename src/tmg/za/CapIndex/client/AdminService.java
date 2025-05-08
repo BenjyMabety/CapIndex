@@ -16,4 +16,6 @@ public interface AdminService extends RemoteService {
 
 	ArrayList<GetCapIndex> getCapIndex();
 
+	ArrayList<GetCapIndex> setCapIndex(ArrayList<GetCapIndex> updates);
+
 }

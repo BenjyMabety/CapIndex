@@ -253,4 +253,31 @@ public class MySQLConnection extends RemoteServiceServlet
 		return result;
 	}
 
+	public ArrayList<GetCapIndex> setCapIndex(ArrayList<GetCapIndex> updates) {
+		try {
+			PreparedStatement ps = conn.prepareStatement(
+					"update CAP_INDEX set INDEX_CITY_NAME = ?,INDEX_PRICE_USD = ?,INDEX_PRICE_ZAR = ?,INDEX_UNIT_FIRST_CHARGE = ?,INDEX_SURCHARGE_PERCENTAGE = ?,INDEX_SURCHARGE_LIMIT = ?,INDEX_SURCHARGE_PRICE = ?,INDEX_UNIT_LAST_PRICE = ?,INDEX_SURCHARGE_FINAL = ?,INDEX_TOURISM_TOKEN = ? where INDEX_ID = ?");
+			for (GetCapIndex value : updates) {
+				ps.setString(1, value.getCityName());
+				ps.setDouble(2, Double.valueOf(value.getPriceUsd()));
+				ps.setDouble(3, Double.valueOf(value.getPriceZar()));
+				ps.setDouble(4, Double.valueOf(value.getUnitFirstCharge()));
+				ps.setDouble(5, Double.valueOf(value.getSurchargePercentage()));
+				ps.setDouble(6, Double.valueOf(value.getSurchargeLimit()));
+				ps.setDouble(7, Double.valueOf(value.getSurchargePrice()));
+				ps.setDouble(8, Double.valueOf(value.getUnitLastPrice()));
+				ps.setDouble(9, Double.valueOf(value.getSurchargeFinal()));
+				ps.setString(10, value.getTourismToken());
+				ps.setInt(11, value.getId());
+				ps.execute();
+			}
+
+			ps.close();
+		} catch (SQLException sqle) {
+			// do stuff on fail
+		}
+
+		return getCapIndex();
+	}
+
 }

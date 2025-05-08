@@ -18,12 +18,14 @@ import com.google.gwt.view.client.SingleSelectionModel;
 
 public class AdminCommands {
 	private final static AdminServiceAsync adminService = GWT.create(AdminService.class);
+	ArrayList<GetCapIndex> updates = new ArrayList<GetCapIndex>();
 
 	public AdminCommands() {
 		// TODO Auto-generated constructor stub
+
 	}
 
-	public static Command getBanksCommand(SimplePanel canvas) {
+	public Command getBanksCommand(SimplePanel canvas) {
 		Command banks = new Command() {
 			public void execute() {
 				adminService.getBanks(new AsyncCallback<ArrayList<GetBank>>() {
@@ -104,7 +106,7 @@ public class AdminCommands {
 		return banks;
 	}
 
-	public static Command getRewardHistoryCommand(SimplePanel canvas) {
+	public Command getRewardHistoryCommand(SimplePanel canvas) {
 		Command banks = new Command() {
 			public void execute() {
 				adminService.getRewardHistory(new AsyncCallback<ArrayList<GetRewardHistory>>() {
@@ -208,7 +210,7 @@ public class AdminCommands {
 		return banks;
 	}
 
-	public static void getCapIndex(SimplePanel canvas, boolean edit) {
+	public void getCapIndex(SimplePanel canvas, boolean edit) {
 
 		adminService.getCapIndex(new AsyncCallback<ArrayList<GetCapIndex>>() {
 
@@ -230,19 +232,6 @@ public class AdminCommands {
 				} else {
 					bindReadOnly(table);
 				}
-
-				// Add a selection model to handle user selection.
-				SingleSelectionModel<GetCapIndex> selectionModel = new SingleSelectionModel<GetCapIndex>();
-				table.setSelectionModel(selectionModel);
-				selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-					public void onSelectionChange(SelectionChangeEvent event) {
-						GetCapIndex selected = selectionModel.getSelectedObject();
-
-						if (selected != null) {
-							// Window.alert("You selected: " + );
-						}
-					}
-				});
 				table.setRowCount(result.size(), true);
 				table.setRowData(0, result);
 				canvas.setWidget(table);
@@ -252,7 +241,46 @@ public class AdminCommands {
 
 	}
 
-	protected static void bindReadOnly(CellTable<GetCapIndex> table) {
+	public void setCapIndex(SimplePanel canvas) {
+
+		adminService.setCapIndex(getUpdates(), new AsyncCallback<ArrayList<GetCapIndex>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onSuccess(ArrayList<GetCapIndex> result) {
+				// TODO Auto-generated method stub
+				CellTable<GetCapIndex> table = new CellTable<GetCapIndex>();
+				table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+				bindReadOnly(table);
+				table.setRowCount(result.size(), true);
+				table.setRowData(0, result);
+				canvas.setWidget(table);
+				updates.clear();
+
+			}
+		});
+
+	}
+
+	protected void bindReadOnly(CellTable<GetCapIndex> table) {
+
+		// Add a selection model to handle user selection.
+		SingleSelectionModel<GetCapIndex> selectionModel = new SingleSelectionModel<GetCapIndex>();
+		table.setSelectionModel(selectionModel);
+		selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+			public void onSelectionChange(SelectionChangeEvent event) {
+				GetCapIndex selected = selectionModel.getSelectedObject();
+
+				if (selected != null) {
+					// Window.alert("You selected: " + );
+				}
+			}
+		});
 
 		TextColumn<GetCapIndex> cityColumn = new TextColumn<GetCapIndex>() {
 			@Override
@@ -351,7 +379,19 @@ public class AdminCommands {
 		table.addColumn(bankColumn, "Bank");
 	}
 
-	protected static void bind(CellTable<GetCapIndex> table) {
+	protected void bind(CellTable<GetCapIndex> table) {
+
+		SingleSelectionModel<GetCapIndex> selectionModel = new SingleSelectionModel<GetCapIndex>();
+		table.setSelectionModel(selectionModel);
+		selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+			public void onSelectionChange(SelectionChangeEvent event) {
+				GetCapIndex selected = selectionModel.getSelectedObject();
+
+				if (selected != null) {
+					// Window.alert("You selected: " + );
+				}
+			}
+		});
 
 		TextInputCell nameCell = new TextInputCell();
 		Column<GetCapIndex, String> cityColumn = new Column<GetCapIndex, String>(nameCell) {
@@ -368,12 +408,14 @@ public class AdminCommands {
 			@Override
 			public void update(int index, GetCapIndex object, String value) {
 				// Inform the user of the change.
-				Window.alert("You changed the name of " + object.getCityName() + " to " + value);
+				// Window.alert("You changed the name of " + object.getCityName() + " to " +
+				// value);
 
 				// Push the changes into the Contact. At this point, you could send an //
 				// asynchronous request to the server to update the database.
 				object.setCityName(value);
-
+				// selectionModel.getSelectedObject().setCityName(value);
+				updates.add(object);
 				// Redraw the table with the new data.
 				table.redraw();
 			}
@@ -400,12 +442,14 @@ public class AdminCommands {
 			@Override
 			public void update(int index, GetCapIndex object, String value) {
 				// Inform the user of the change.
-				Window.alert("You changed the name of " + object.getPriceUsd() + " to " + value);
+				// Window.alert("You changed the name of " + object.getPriceUsd() + " to " +
+				// value);
 
 				// Push the changes into the Contact. At this point, you could send an //
 				// asynchronous request to the server to update the database.
 
 				object.setPriceUsd(value);
+				updates.add(object);
 
 				// Redraw the table with the new data.
 				table.redraw();
@@ -425,11 +469,13 @@ public class AdminCommands {
 			@Override
 			public void update(int index, GetCapIndex object, String value) {
 				// Inform the user of the change.
-				Window.alert("You changed the name of " + object.getPriceZar() + " to " + value);
+				// Window.alert("You changed the name of " + object.getPriceZar() + " to " +
+				// value);
 
 				// Push the changes into the Contact. At this point, you could send an //
 				// asynchronous request to the server to update the database.
 				object.setPriceZar(value);
+				updates.add(object);
 
 				// Redraw the table with the new data.
 				table.redraw();
@@ -449,11 +495,13 @@ public class AdminCommands {
 			@Override
 			public void update(int index, GetCapIndex object, String value) {
 				// Inform the user of the change.
-				Window.alert("You changed the name of " + object.getUnitFirstCharge() + " to " + value);
+				// Window.alert("You changed the name of " + object.getUnitFirstCharge() + " to
+				// " + value);
 
 				// Push the changes into the Contact. At this point, you could send an //
 				// asynchronous request to the server to update the database.
 				object.setUnitFirstCharge(value);
+				updates.add(object);
 
 				// Redraw the table with the new data.
 				table.redraw();
@@ -473,11 +521,13 @@ public class AdminCommands {
 			@Override
 			public void update(int index, GetCapIndex object, String value) {
 				// Inform the user of the change.
-				Window.alert("You changed the name of " + object.getSurchargePercentage() + " to " + value);
+				// Window.alert("You changed the name of " + object.getSurchargePercentage() + "
+				// to " + value);
 
 				// Push the changes into the Contact. At this point, you could send an //
 				// asynchronous request to the server to update the database.
 				object.setSurchargePercentage(value);
+				updates.add(object);
 
 				// Redraw the table with the new data.
 				table.redraw();
@@ -496,11 +546,13 @@ public class AdminCommands {
 			@Override
 			public void update(int index, GetCapIndex object, String value) {
 				// Inform the user of the change.
-				Window.alert("You changed the name of " + object.getSurchargeLimit() + " to " + value);
+				// Window.alert("You changed the name of " + object.getSurchargeLimit() + " to "
+				// + value);
 
 				// Push the changes into the Contact. At this point, you could send an //
 				// asynchronous request to the server to update the database.
 				object.setSurchargeLimit(value);
+				updates.add(object);
 
 				// Redraw the table with the new data.
 				table.redraw();
@@ -520,11 +572,13 @@ public class AdminCommands {
 			@Override
 			public void update(int index, GetCapIndex object, String value) {
 				// Inform the user of the change.
-				Window.alert("You changed the name of " + object.getSurchargePrice() + " to " + value);
+				// Window.alert("You changed the name of " + object.getSurchargePrice() + " to "
+				// + value);
 
 				// Push the changes into the Contact. At this point, you could send an //
 				// asynchronous request to the server to update the database.
 				object.setSurchargePrice(value);
+				updates.add(object);
 
 				// Redraw the table with the new data.
 				table.redraw();
@@ -544,11 +598,13 @@ public class AdminCommands {
 			@Override
 			public void update(int index, GetCapIndex object, String value) {
 				// Inform the user of the change.
-				Window.alert("You changed the name of " + object.getUnitLastPrice() + " to " + value);
+				// Window.alert("You changed the name of " + object.getUnitLastPrice() + " to "
+				// + value);
 
 				// Push the changes into the Contact. At this point, you could send an //
 				// asynchronous request to the server to update the database.
 				object.setUnitLastPrice(value);
+				updates.add(object);
 
 				// Redraw the table with the new data.
 				table.redraw();
@@ -568,11 +624,13 @@ public class AdminCommands {
 			@Override
 			public void update(int index, GetCapIndex object, String value) {
 				// Inform the user of the change.
-				Window.alert("You changed the name of " + object.getSurchargeFinal() + " to " + value);
+				// Window.alert("You changed the name of " + object.getSurchargeFinal() + " to "
+				// + value);
 
 				// Push the changes into the Contact. At this point, you could send an //
 				// asynchronous request to the server to update the database.
 				object.setSurchargeFinal(value);
+				updates.add(object);
 
 				// Redraw the table with the new data.
 				table.redraw();
@@ -592,11 +650,14 @@ public class AdminCommands {
 			@Override
 			public void update(int index, GetCapIndex object, String value) {
 				// Inform the user of the change.
-				Window.alert("You changed the name of " + object.getTourismToken() + " to " + value);
+				// Window.alert("You changed the name of " + object.getTourismToken() + " to " +
+				// value);
 
 				// Push the changes into the Contact. At this point, you could send an //
 				// asynchronous request to the server to update the database.
 				object.setTourismToken(value);
+				// selectionModel.getSelectedObject().setTourismToken(value);
+				updates.add(object);
 
 				// Redraw the table with the new data.
 				table.redraw();
@@ -610,6 +671,13 @@ public class AdminCommands {
 			}
 		};
 		table.addColumn(bankColumn, "Bank");
+		// Add a selection model to handle user selection.
+
+	}
+
+	public ArrayList<GetCapIndex> getUpdates() {
+
+		return updates;
 	}
 
 }

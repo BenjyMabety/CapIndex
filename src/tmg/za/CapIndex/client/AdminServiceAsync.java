@@ -14,4 +14,6 @@ public interface AdminServiceAsync {
 
 	void getCapIndex(AsyncCallback<ArrayList<GetCapIndex>> callback);
 
+	void setCapIndex(ArrayList<GetCapIndex> updates, AsyncCallback<ArrayList<GetCapIndex>> callback);
+
 }

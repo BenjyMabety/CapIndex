@@ -35,4 +35,10 @@ public class AdminServiceImpl extends RemoteServiceServlet implements AdminServi
 		return conn.getCapIndex();
 	}
 
+	@Override
+	public ArrayList<GetCapIndex> setCapIndex(ArrayList<GetCapIndex> updates) {
+		// TODO Auto-generated method stub
+		return conn.setCapIndex(updates);
+	}
+
 }
