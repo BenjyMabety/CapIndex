@@ -55,7 +55,7 @@ public class MySQLConnection extends RemoteServiceServlet {
 			ps.setString(2, hash);
 			ResultSet result = ps.executeQuery();
 			while (result.next()) {
-				user = new GetAdminUser(result.getString(2), result.getString(3));
+				user = new GetAdminUser(result.getString(2), result.getInt(1));
 			}
 			result.close();
 			ps.close();

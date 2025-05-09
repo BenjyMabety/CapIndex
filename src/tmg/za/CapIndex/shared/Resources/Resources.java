@@ -20,4 +20,7 @@ public interface Resources extends ClientBundle {
 	@Source("save_index.png")
 	ImageResource save();
 
+	@Source("buy.png")
+	ImageResource buy();
+
 }

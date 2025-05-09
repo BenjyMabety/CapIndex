@@ -28,6 +28,7 @@ import tmg.za.CapIndex.client.data.GetRewardHistory;
 public class AdminCommands {
 	private final static AdminServiceAsync adminService = GWT.create(AdminService.class);
 	ArrayList<GetCapIndex> updates = new ArrayList<GetCapIndex>();
+	ArrayList<GetCapIndex> index = new ArrayList<GetCapIndex>();
 
 	public AdminCommands() {
 
@@ -226,7 +227,7 @@ public class AdminCommands {
 	 * @param canvas
 	 * @param edit
 	 */
-	public void getCapIndex(SimplePanel canvas, boolean edit) {
+	public ArrayList<GetCapIndex> getCapIndex(SimplePanel canvas, boolean edit) {
 
 		adminService.getCapIndex(new AsyncCallback<ArrayList<GetCapIndex>>() {
 
@@ -237,6 +238,7 @@ public class AdminCommands {
 
 			@Override
 			public void onSuccess(ArrayList<GetCapIndex> result) {
+				index = result;
 				CellTable<GetCapIndex> table = new CellTable<GetCapIndex>();
 				table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
@@ -253,12 +255,14 @@ public class AdminCommands {
 			}
 		});
 
+		return index;
+
 	}
 
 	/**
 	 * @param canvas
 	 */
-	public void setCapIndex(SimplePanel canvas) {
+	public ArrayList<GetCapIndex> setCapIndex(SimplePanel canvas) {
 
 		adminService.setCapIndex(getUpdates(), new AsyncCallback<ArrayList<GetCapIndex>>() {
 
@@ -269,6 +273,7 @@ public class AdminCommands {
 
 			@Override
 			public void onSuccess(ArrayList<GetCapIndex> result) {
+				index = result;
 				CellTable<GetCapIndex> table = new CellTable<GetCapIndex>();
 				table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 				bindReadOnly(table);
@@ -279,6 +284,8 @@ public class AdminCommands {
 
 			}
 		});
+
+		return index;
 
 	}
 

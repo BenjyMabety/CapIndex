@@ -11,6 +11,7 @@ public class GetAdminUser implements IsSerializable {
 	private String username;
 	private Timestamp lastLogin;
 	private Timestamp createdDate;
+	private int userId;
 
 	@SuppressWarnings("unused")
 	public GetAdminUser() {
@@ -21,8 +22,9 @@ public class GetAdminUser implements IsSerializable {
 	 * @param username
 	 * @param password
 	 */
-	public GetAdminUser(String username, String password) {
+	public GetAdminUser(String username, int userId) {
 		this.username = username;
+		this.userId = userId;
 	}
 
 	/**
@@ -65,5 +67,19 @@ public class GetAdminUser implements IsSerializable {
 	 */
 	public void setCreatedDate(Timestamp createdDate) {
 		this.createdDate = createdDate;
+	}
+
+	/**
+	 * @return
+	 */
+	public int getUserId() {
+		return userId;
+	}
+
+	/**
+	 * @param userId
+	 */
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 }

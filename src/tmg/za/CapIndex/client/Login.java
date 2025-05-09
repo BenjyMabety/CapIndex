@@ -110,7 +110,7 @@ public class Login extends DialogBox {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						Window.alert("Something went wrong");
+						Window.alert(caught.getLocalizedMessage() + ":" + caught.getMessage());
 
 					}
 

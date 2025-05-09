@@ -3,6 +3,8 @@
  */
 package tmg.za.CapIndex.client;
 
+import java.util.ArrayList;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -22,6 +24,7 @@ import com.google.gwt.user.client.ui.Widget;
 import tmg.za.CapIndex.client.Commands.AdminCommands;
 import tmg.za.CapIndex.client.Commands.LocationCommands;
 import tmg.za.CapIndex.client.Commands.PeopleCommands;
+import tmg.za.CapIndex.client.data.GetCapIndex;
 import tmg.za.CapIndex.shared.MyFoo.MyStyle;
 import tmg.za.CapIndex.shared.Resources.Resources;
 
@@ -52,6 +55,9 @@ public class MainLayout extends Composite {
 	Image home;
 	Image edit;
 	Image save;
+	Image buy;
+	Simulator sim = new Simulator();
+	ArrayList<GetCapIndex> index = new ArrayList<GetCapIndex>();
 
 	/**
 	 * 
@@ -65,6 +71,7 @@ public class MainLayout extends Composite {
 		home = new Image(resources.home());
 		edit = new Image(resources.edit());
 		save = new Image(resources.save());
+		buy = new Image(resources.buy());
 
 		login = new Login();
 		mainPanel.add(login.getALogin());
@@ -74,6 +81,7 @@ public class MainLayout extends Composite {
 		menu.setVisible(false);
 		home.setVisible(false);
 		edit.setVisible(false);
+		buy.setVisible(false);
 		save.setVisible(false);
 
 		login.getALogin().addClickHandler(new ClickHandler() {
@@ -97,10 +105,14 @@ public class MainLayout extends Composite {
 					menu.setVisible(true);
 					home.setVisible(true);
 					edit.setVisible(true);
+					if (login.getUser().getUserId() == 1) {
+						buy.setVisible(true);
+					}
 					save.setVisible(true);
 					mainPanel.add(home);
 					mainPanel.add(edit);
 					mainPanel.add(save);
+					mainPanel.add(buy);
 				}
 			}
 		});
@@ -117,7 +129,8 @@ public class MainLayout extends Composite {
 				home.setVisible(false);
 				edit.setVisible(false);
 				save.setVisible(false);
-				adminCommands.getCapIndex(canvas, false);
+				buy.setVisible(false);
+				index = adminCommands.getCapIndex(canvas, false);
 
 			}
 		});
@@ -126,7 +139,7 @@ public class MainLayout extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				adminCommands.getCapIndex(canvas, false);
+				index = adminCommands.getCapIndex(canvas, false);
 			}
 		});
 
@@ -134,7 +147,7 @@ public class MainLayout extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				adminCommands.getCapIndex(canvas, false);
+				index = adminCommands.getCapIndex(canvas, false);
 			}
 		});
 
@@ -150,7 +163,17 @@ public class MainLayout extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 
-				adminCommands.setCapIndex(canvas);
+				index = adminCommands.setCapIndex(canvas);
+			}
+		});
+		buy.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				canvas.clear();
+				sim.setIndex(index);
+				sim.start(canvas);
+
 			}
 		});
 
@@ -174,7 +197,7 @@ public class MainLayout extends Composite {
 
 		vEast.add(menu);
 
-		adminCommands.getCapIndex(canvas, false);
+		index = adminCommands.getCapIndex(canvas, false);
 
 	}
 

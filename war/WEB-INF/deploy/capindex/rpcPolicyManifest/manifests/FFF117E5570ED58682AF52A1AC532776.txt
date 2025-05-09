@@ -1,2 +1,0 @@
-serviceClass: tmg.za.CapIndex.client.GreetingService
-path: A20A409C42D4306CD5126736AA84EB92.gwt.rpc

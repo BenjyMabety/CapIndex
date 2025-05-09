@@ -1,6 +1,6 @@
 # Module capindex
 # RPC service class, partial path of RPC policy file
+tmg.za.CapIndex.client.PeopleService, 722ACDA5DF34A7DEED854D977EC3B6A4.gwt.rpc
+tmg.za.CapIndex.client.GreetingService, 66C0481055046657943B61A76538E881.gwt.rpc
 tmg.za.CapIndex.client.LocationService, 90177CAF481E9EFAD026AC3656D1F7AA.gwt.rpc
 tmg.za.CapIndex.client.AdminService, 07498F1A30A4EB450CD8898C88C99512.gwt.rpc
-tmg.za.CapIndex.client.PeopleService, 4687C9794D8B8D4C0D8DB8366817D745.gwt.rpc
-tmg.za.CapIndex.client.GreetingService, A20A409C42D4306CD5126736AA84EB92.gwt.rpc
