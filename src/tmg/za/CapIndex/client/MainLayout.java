@@ -19,8 +19,11 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import tmg.za.CapIndex.client.Commands.AdminCommands;
+import tmg.za.CapIndex.client.Commands.LocationCommands;
+import tmg.za.CapIndex.client.Commands.PeopleCommands;
 import tmg.za.CapIndex.shared.MyFoo.MyStyle;
-import tmg.za.CapIndex.shared.Resources;
+import tmg.za.CapIndex.shared.Resources.Resources;
 
 /**
  * 
@@ -50,6 +53,9 @@ public class MainLayout extends Composite {
 	Image edit;
 	Image save;
 
+	/**
+	 * 
+	 */
 	public MainLayout() {
 		initWidget(uiBinder.createAndBindUi(this));
 		setEnabled(true);
@@ -59,14 +65,17 @@ public class MainLayout extends Composite {
 		home = new Image(resources.home());
 		edit = new Image(resources.edit());
 		save = new Image(resources.save());
+
 		login = new Login();
 		mainPanel.add(login.getALogin());
 		login.getaSignOut().setVisible(false);
 		mainPanel.add(login.getaSignOut());
+
 		menu.setVisible(false);
 		home.setVisible(false);
 		edit.setVisible(false);
 		save.setVisible(false);
+
 		login.getALogin().addClickHandler(new ClickHandler() {
 
 			@Override
@@ -80,7 +89,6 @@ public class MainLayout extends Composite {
 
 			@Override
 			public void onClose(CloseEvent<PopupPanel> event) {
-				// TODO Auto-generated method stub
 				if (login.getUser() != null) {
 					setEnabled(false);
 					login.getALogin().setVisible(false);
@@ -100,7 +108,6 @@ public class MainLayout extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
 				setEnabled(true);
 				mainPanel.remove(login.getUserName());
 				login.getaSignOut().setVisible(false);
@@ -119,7 +126,6 @@ public class MainLayout extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
 				adminCommands.getCapIndex(canvas, false);
 			}
 		});
@@ -128,7 +134,6 @@ public class MainLayout extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
 				adminCommands.getCapIndex(canvas, false);
 			}
 		});
@@ -137,7 +142,6 @@ public class MainLayout extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
 				adminCommands.getCapIndex(canvas, true);
 			}
 		});
@@ -146,7 +150,6 @@ public class MainLayout extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 
-				// TODO Auto-generated method stub
 				adminCommands.setCapIndex(canvas);
 			}
 		});
@@ -175,6 +178,9 @@ public class MainLayout extends Composite {
 
 	}
 
+	/**
+	 * @param enabled
+	 */
 	void setEnabled(boolean enabled) {
 		getElement().addClassName(enabled ? style.enabledBall() : style.enabledSpace());
 		getElement().removeClassName(enabled ? style.enabledSpace() : style.enabledBall());

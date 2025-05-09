@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import tmg.za.CapIndex.client.AdminService;
-import tmg.za.CapIndex.client.GetBank;
-import tmg.za.CapIndex.client.GetCapIndex;
-import tmg.za.CapIndex.client.GetRewardHistory;
+import tmg.za.CapIndex.client.data.GetBank;
+import tmg.za.CapIndex.client.data.GetCapIndex;
+import tmg.za.CapIndex.client.data.GetRewardHistory;
 import tmg.za.CapIndex.shared.MySQLConnection;
 
 /**
@@ -19,25 +19,21 @@ public class AdminServiceImpl extends RemoteServiceServlet implements AdminServi
 
 	@Override
 	public ArrayList<GetBank> getBanks() {
-		// TODO Auto-generated method stub
 		return conn.getBanks();
 	}
 
 	@Override
 	public ArrayList<GetRewardHistory> getRewardHistory() {
-		// TODO Auto-generated method stub
 		return conn.getRewardHistory();
 	}
 
 	@Override
 	public ArrayList<GetCapIndex> getCapIndex() {
-		// TODO Auto-generated method stub
 		return conn.getCapIndex();
 	}
 
 	@Override
 	public ArrayList<GetCapIndex> setCapIndex(ArrayList<GetCapIndex> updates) {
-		// TODO Auto-generated method stub
 		return conn.setCapIndex(updates);
 	}
 

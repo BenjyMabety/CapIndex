@@ -2,6 +2,8 @@ package tmg.za.CapIndex.client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import tmg.za.CapIndex.client.data.GetAdminUser;
+
 /**
  * The async counterpart of <code>GreetingService</code>.
  */

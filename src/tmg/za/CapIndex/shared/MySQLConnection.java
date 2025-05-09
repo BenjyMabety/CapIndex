@@ -9,17 +9,18 @@ import java.util.ArrayList;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import tmg.za.CapIndex.client.GetAdminUser;
-import tmg.za.CapIndex.client.GetBank;
-import tmg.za.CapIndex.client.GetCapIndex;
-import tmg.za.CapIndex.client.GetCountry;
-import tmg.za.CapIndex.client.GetRewardHistory;
-import tmg.za.CapIndex.client.GetState;
-import tmg.za.CapIndex.client.GetUser;
+import tmg.za.CapIndex.client.data.GetAdminUser;
+import tmg.za.CapIndex.client.data.GetBank;
+import tmg.za.CapIndex.client.data.GetCapIndex;
+import tmg.za.CapIndex.client.data.GetCountry;
+import tmg.za.CapIndex.client.data.GetRewardHistory;
+import tmg.za.CapIndex.client.data.GetState;
+import tmg.za.CapIndex.client.data.GetUser;
 
-public class MySQLConnection extends RemoteServiceServlet
-
-{
+/**
+ * 
+ */
+public class MySQLConnection extends RemoteServiceServlet {
 	/**
 	 * 
 	 */
@@ -39,6 +40,11 @@ public class MySQLConnection extends RemoteServiceServlet
 		}
 	}
 
+	/**
+	 * @param userName
+	 * @param pass
+	 * @return
+	 */
 	public GetAdminUser authenticateUser(String userName, String pass) {
 		GetAdminUser user = null;
 		try {
@@ -59,6 +65,9 @@ public class MySQLConnection extends RemoteServiceServlet
 		return user;
 	}
 
+	/**
+	 * @return
+	 */
 	public ArrayList<GetCountry> getCountries() {
 		ArrayList<GetCountry> result = new ArrayList<GetCountry>();
 		try {
@@ -82,6 +91,9 @@ public class MySQLConnection extends RemoteServiceServlet
 		return result;
 	}
 
+	/**
+	 * @return
+	 */
 	public ArrayList<GetState> getStates() {
 		ArrayList<GetState> result = new ArrayList<GetState>();
 		try {
@@ -108,6 +120,9 @@ public class MySQLConnection extends RemoteServiceServlet
 		return result;
 	}
 
+	/**
+	 * @return
+	 */
 	public ArrayList<GetAdminUser> getAdminUsers() {
 		ArrayList<GetAdminUser> result = new ArrayList<GetAdminUser>();
 		try {
@@ -131,6 +146,9 @@ public class MySQLConnection extends RemoteServiceServlet
 		return result;
 	}
 
+	/**
+	 * @return
+	 */
 	public ArrayList<GetUser> getUsers() {
 		ArrayList<GetUser> result = new ArrayList<GetUser>();
 		try {
@@ -158,6 +176,9 @@ public class MySQLConnection extends RemoteServiceServlet
 		return result;
 	}
 
+	/**
+	 * @return
+	 */
 	public ArrayList<GetBank> getBanks() {
 		ArrayList<GetBank> result = new ArrayList<GetBank>();
 		try {
@@ -186,6 +207,9 @@ public class MySQLConnection extends RemoteServiceServlet
 		return result;
 	}
 
+	/**
+	 * @return
+	 */
 	public ArrayList<GetRewardHistory> getRewardHistory() {
 		ArrayList<GetRewardHistory> result = new ArrayList<GetRewardHistory>();
 		try {
@@ -209,6 +233,7 @@ public class MySQLConnection extends RemoteServiceServlet
 			}
 			rs.close();
 			ps.close();
+
 		} catch (SQLException sqle) {
 			// do stuff on fail
 		}
@@ -216,6 +241,9 @@ public class MySQLConnection extends RemoteServiceServlet
 		return result;
 	}
 
+	/**
+	 * @return
+	 */
 	public ArrayList<GetCapIndex> getCapIndex() {
 		ArrayList<GetCapIndex> result = new ArrayList<GetCapIndex>();
 		try {
@@ -253,6 +281,10 @@ public class MySQLConnection extends RemoteServiceServlet
 		return result;
 	}
 
+	/**
+	 * @param updates
+	 * @return
+	 */
 	public ArrayList<GetCapIndex> setCapIndex(ArrayList<GetCapIndex> updates) {
 		try {
 			PreparedStatement ps = conn.prepareStatement(

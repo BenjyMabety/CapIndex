@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import tmg.za.CapIndex.client.data.GetBank;
+import tmg.za.CapIndex.client.data.GetCapIndex;
+import tmg.za.CapIndex.client.data.GetRewardHistory;
+
 /**
  * The async counterpart of <code>AdminService</code>.
  */

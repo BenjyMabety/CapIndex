@@ -13,12 +13,11 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import tmg.za.CapIndex.client.data.GetAdminUser;
 import tmg.za.CapIndex.shared.FieldVerifier;
 
 public class Login extends DialogBox {
@@ -27,13 +26,6 @@ public class Login extends DialogBox {
 
 	interface LoginUiBinder extends UiBinder<Widget, Login> {
 	}
-
-	/**
-	 * The message displayed to the user when the server cannot be reached or
-	 * returns an error.
-	 */
-	private static final String SERVER_ERROR = "An error occurred while "
-			+ "attempting to contact the server. Please check your network " + "connection and try again.";
 
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting service.
@@ -61,9 +53,9 @@ public class Login extends DialogBox {
 		aLogin = new Anchor("Login");
 		aSignOut = new Anchor("Sign Out");
 		sendButton.setText("Send");
-		// nameField.setText("GWT User");
+
 		closeButton.setText("Close");
-		// We can add style names to widgets
+
 		sendButton.addStyleName("sendButton");
 		// Focus the cursor on the name field when the app loads
 		nameField.setFocus(true);
@@ -79,29 +71,9 @@ public class Login extends DialogBox {
 			}
 		});
 
-		// Create the popup dialog box
-		final DialogBox dialogBox = new DialogBox();
-		dialogBox.setText("Remote Procedure Call");
-		dialogBox.setAnimationEnabled(true);
-		final Button closeButton = new Button("Close");
-		// We can set the id of a widget by accessing its Element
-		closeButton.getElement().setId("closeButton");
-		final Label textToServerLabel = new Label();
-		final HTML serverResponseLabel = new HTML();
-		VerticalPanel dialogVPanel = new VerticalPanel();
-		dialogVPanel.addStyleName("dialogVPanel");
-		dialogVPanel.add(new HTML("<b>Sending name to the server:</b>"));
-		dialogVPanel.add(textToServerLabel);
-		dialogVPanel.add(new HTML("<br><b>Server replies:</b>"));
-		dialogVPanel.add(serverResponseLabel);
-		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-		dialogVPanel.add(closeButton);
-		dialogBox.setWidget(dialogVPanel);
-
 		// Add a handler to close the DialogBox
 		closeButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				dialogBox.hide();
 				sendButton.setEnabled(true);
 				sendButton.setFocus(true);
 			}
@@ -134,24 +106,17 @@ public class Login extends DialogBox {
 					errorLabel.setText("Please enter at least four characters");
 					return;
 				}
-
-				textToServerLabel.setText(textToServer);
-				serverResponseLabel.setText("");
-
 				greetingService.authenticateUser(textToServer, passField.getValue(), new AsyncCallback<GetAdminUser>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
 						Window.alert("Something went wrong");
 
 					}
 
 					@Override
 					public void onSuccess(GetAdminUser result) {
-						// TODO Auto-generated method stub
 						if (result != null) {
-							// Window.alert("Authenticated");
 							user = result;
 							userName.setText(result.getUsername());
 							hide();
@@ -186,10 +151,16 @@ public class Login extends DialogBox {
 		this.aLogin = aLogin;
 	}
 
+	/**
+	 * @return
+	 */
 	public GetAdminUser getUser() {
 		return user;
 	}
 
+	/**
+	 * @param user
+	 */
 	public void setUser(GetAdminUser user) {
 		this.user = user;
 	}
@@ -198,14 +169,23 @@ public class Login extends DialogBox {
 		return aSignOut;
 	}
 
+	/**
+	 * @param aSignOut
+	 */
 	public void setaSignOut(Anchor aSignOut) {
 		this.aSignOut = aSignOut;
 	}
 
+	/**
+	 * @return
+	 */
 	public Label getUserName() {
 		return userName;
 	}
 
+	/**
+	 * @param userName
+	 */
 	public void setUserName(Label userName) {
 		this.userName = userName;
 	}

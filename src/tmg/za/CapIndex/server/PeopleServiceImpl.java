@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import tmg.za.CapIndex.client.GetAdminUser;
-import tmg.za.CapIndex.client.GetUser;
 import tmg.za.CapIndex.client.PeopleService;
+import tmg.za.CapIndex.client.data.GetAdminUser;
+import tmg.za.CapIndex.client.data.GetUser;
 import tmg.za.CapIndex.shared.MySQLConnection;
 
 /**
@@ -19,13 +19,11 @@ public class PeopleServiceImpl extends RemoteServiceServlet implements PeopleSer
 
 	@Override
 	public ArrayList<GetAdminUser> getAdminUsers() {
-		// TODO Auto-generated method stub
 		return conn.getAdminUsers();
 	}
 
 	@Override
 	public ArrayList<GetUser> getUsers() {
-		// TODO Auto-generated method stub
 		return conn.getUsers();
 	}
 

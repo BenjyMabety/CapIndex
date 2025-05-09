@@ -1,0 +1,2 @@
+serviceClass: tmg.za.CapIndex.client.LocationService
+path: 90177CAF481E9EFAD026AC3656D1F7AA.gwt.rpc
