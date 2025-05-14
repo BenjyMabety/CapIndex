@@ -9,9 +9,10 @@ public class GetUser implements IsSerializable {
 	private String firstName;
 	private String lastName;
 	private String cardNumber;
-	private String bankID;
+	private int bankID;
 	private double loyaltyCredit;
 	private String bankName;
+	private String id;
 
 	@SuppressWarnings("unused")
 	public GetUser() {
@@ -26,7 +27,7 @@ public class GetUser implements IsSerializable {
 	 * @param loyaltyCredit
 	 * @param bankName
 	 */
-	public GetUser(String firstName, String lastName, String cardNumber, String bankID, double loyaltyCredit,
+	public GetUser(String firstName, String lastName, String cardNumber, int bankID, double loyaltyCredit,
 			String bankName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -82,14 +83,14 @@ public class GetUser implements IsSerializable {
 	/**
 	 * @return
 	 */
-	public String getBankID() {
+	public int getBankID() {
 		return bankID;
 	}
 
 	/**
 	 * @param bankID
 	 */
-	public void setBankID(String bankID) {
+	public void setBankID(int bankID) {
 		this.bankID = bankID;
 	}
 
@@ -119,5 +120,13 @@ public class GetUser implements IsSerializable {
 	 */
 	public void setBankName(String bankName) {
 		this.bankName = bankName;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 }

@@ -3,8 +3,6 @@
  */
 package tmg.za.CapIndex.client;
 
-import java.util.ArrayList;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -24,7 +22,6 @@ import com.google.gwt.user.client.ui.Widget;
 import tmg.za.CapIndex.client.Commands.AdminCommands;
 import tmg.za.CapIndex.client.Commands.LocationCommands;
 import tmg.za.CapIndex.client.Commands.PeopleCommands;
-import tmg.za.CapIndex.client.data.GetCapIndex;
 import tmg.za.CapIndex.shared.MyFoo.MyStyle;
 import tmg.za.CapIndex.shared.Resources.Resources;
 
@@ -57,7 +54,6 @@ public class MainLayout extends Composite {
 	Image save;
 	Image buy;
 	Simulator sim = new Simulator();
-	ArrayList<GetCapIndex> index = new ArrayList<GetCapIndex>();
 
 	/**
 	 * 
@@ -130,7 +126,7 @@ public class MainLayout extends Composite {
 				edit.setVisible(false);
 				save.setVisible(false);
 				buy.setVisible(false);
-				index = adminCommands.getCapIndex(canvas, false);
+				adminCommands.getCapIndex(canvas, false);
 
 			}
 		});
@@ -139,15 +135,7 @@ public class MainLayout extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				index = adminCommands.getCapIndex(canvas, false);
-			}
-		});
-
-		home.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				index = adminCommands.getCapIndex(canvas, false);
+				adminCommands.getCapIndex(canvas, false);
 			}
 		});
 
@@ -163,7 +151,7 @@ public class MainLayout extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 
-				index = adminCommands.setCapIndex(canvas);
+				adminCommands.setCapIndex(canvas);
 			}
 		});
 		buy.addClickHandler(new ClickHandler() {
@@ -171,7 +159,8 @@ public class MainLayout extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				canvas.clear();
-				sim.setIndex(index);
+				// Window.alert("lOOK at My SIZE: " + adminCommands.getIndex().size() + "");
+				sim.setIndex(adminCommands.getIndex());
 				sim.start(canvas);
 
 			}
@@ -197,7 +186,7 @@ public class MainLayout extends Composite {
 
 		vEast.add(menu);
 
-		index = adminCommands.getCapIndex(canvas, false);
+		adminCommands.getCapIndex(canvas, false);
 
 	}
 

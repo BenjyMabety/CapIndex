@@ -15,4 +15,6 @@ public interface PeopleServiceAsync {
 
 	void getUsers(AsyncCallback<ArrayList<GetUser>> callback);
 
+	void setUser(GetUser user, AsyncCallback<ArrayList<GetUser>> callback);
+
 }

@@ -16,6 +16,10 @@ public interface AdminServiceAsync {
 
 	void getRewardHistory(AsyncCallback<ArrayList<GetRewardHistory>> callback);
 
+	void setRewardHistory(GetRewardHistory record, AsyncCallback<String> callback);
+
+	void updateRewardHistory(String userId, AsyncCallback<String> callback);
+
 	void getCapIndex(AsyncCallback<ArrayList<GetCapIndex>> callback);
 
 	void setCapIndex(ArrayList<GetCapIndex> updates, AsyncCallback<ArrayList<GetCapIndex>> callback);

@@ -17,4 +17,6 @@ public interface PeopleService extends RemoteService {
 
 	ArrayList<GetUser> getUsers();
 
+	ArrayList<GetUser> setUser(GetUser user);
+
 }

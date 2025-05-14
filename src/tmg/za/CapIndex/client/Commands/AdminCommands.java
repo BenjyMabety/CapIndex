@@ -657,4 +657,12 @@ public class AdminCommands {
 		return updates;
 	}
 
+	public ArrayList<GetCapIndex> getIndex() {
+		return index;
+	}
+
+	public void setIndex(ArrayList<GetCapIndex> index) {
+		this.index = index;
+	}
+
 }

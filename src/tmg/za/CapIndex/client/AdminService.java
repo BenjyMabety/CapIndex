@@ -18,6 +18,10 @@ public interface AdminService extends RemoteService {
 
 	ArrayList<GetRewardHistory> getRewardHistory();
 
+	String setRewardHistory(GetRewardHistory record);
+
+	String updateRewardHistory(String userId);
+
 	ArrayList<GetCapIndex> getCapIndex();
 
 	ArrayList<GetCapIndex> setCapIndex(ArrayList<GetCapIndex> updates);

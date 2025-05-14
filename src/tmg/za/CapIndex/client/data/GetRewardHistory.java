@@ -1,6 +1,6 @@
 package tmg.za.CapIndex.client.data;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
@@ -8,10 +8,10 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  * 
  */
 public class GetRewardHistory implements IsSerializable {
-	private int id;
+	private String id;
 	private String rewardDescription;
-	private Date rewardTransactionTime;
-	private int rewardUserId;
+	private Timestamp rewardTransactionTime;
+	private String rewardUserId;
 	private String userCardNumber;
 	private double rewardAmount;
 	private double finalAmount;
@@ -34,7 +34,7 @@ public class GetRewardHistory implements IsSerializable {
 	 * @param rewardApplied
 	 * @param tokenIndex
 	 */
-	public GetRewardHistory(int id, String rewardDescription, Date rewardTransactionTime, int rewardUserId,
+	public GetRewardHistory(String id, String rewardDescription, Timestamp rewardTransactionTime, String rewardUserId,
 			String userCardNumber, double rewardAmount, double finalAmount, boolean rewardApplied, int tokenIndex) {
 		this.id = id;
 		this.rewardDescription = rewardDescription;
@@ -51,14 +51,14 @@ public class GetRewardHistory implements IsSerializable {
 	/**
 	 * @return
 	 */
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
 	/**
 	 * @param id
 	 */
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -79,28 +79,28 @@ public class GetRewardHistory implements IsSerializable {
 	/**
 	 * @return
 	 */
-	public Date getRewardTransactionTime() {
+	public Timestamp getRewardTransactionTime() {
 		return rewardTransactionTime;
 	}
 
 	/**
 	 * @param rewardTransactionTime
 	 */
-	public void setRewardTransactionTime(Date rewardTransactionTime) {
+	public void setRewardTransactionTime(Timestamp rewardTransactionTime) {
 		this.rewardTransactionTime = rewardTransactionTime;
 	}
 
 	/**
 	 * @return
 	 */
-	public int getRewardUserId() {
+	public String getRewardUserId() {
 		return rewardUserId;
 	}
 
 	/**
 	 * @param rewardUserId
 	 */
-	public void setRewardUserId(int rewardUserId) {
+	public void setRewardUserId(String rewardUserId) {
 		this.rewardUserId = rewardUserId;
 	}
 

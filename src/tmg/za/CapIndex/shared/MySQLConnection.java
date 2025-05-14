@@ -161,7 +161,7 @@ public class MySQLConnection extends RemoteServiceServlet {
 				user.setFirstName(rs.getString(1));
 				user.setLastName(rs.getString(2));
 				user.setCardNumber(rs.getString(3));
-				user.setBankID(rs.getString(4));
+				user.setBankID(rs.getInt(4));
 				user.setLoyaltyCredit(rs.getDouble(5));
 				user.setBankName(rs.getString(6));
 				result.add(user);
@@ -174,6 +174,28 @@ public class MySQLConnection extends RemoteServiceServlet {
 		}
 
 		return result;
+	}
+
+	public ArrayList<GetUser> setUser(GetUser user) {
+		try {
+			PreparedStatement ps = conn.prepareStatement(
+					"insert into cap_user (USER_ID,USER_FIRST_NAME,USER_LAST_NAME,USER_CARD_NUMBER,USER_BANK_ID,USER_LOYALTY_CREDIT) values (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE USER_LOYALTY_CREDIT = USER_LOYALTY_CREDIT + ?");
+
+			ps.setString(1, user.getId());
+			ps.setString(2, user.getFirstName());
+			ps.setString(3, user.getLastName());
+			ps.setString(4, user.getCardNumber());
+			ps.setInt(5, user.getBankID());
+			ps.setDouble(6, user.getLoyaltyCredit());
+			ps.setDouble(7, user.getLoyaltyCredit());
+
+			ps.execute();
+			ps.close();
+		} catch (SQLException sqle) {
+			// do stuff on fail
+		}
+
+		return getUsers();
 	}
 
 	/**
@@ -219,10 +241,10 @@ public class MySQLConnection extends RemoteServiceServlet {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				GetRewardHistory rewardHistory = new GetRewardHistory();
-				rewardHistory.setId(rs.getInt(1));
+				rewardHistory.setId(rs.getString(1));
 				rewardHistory.setRewardDescription(rs.getString(2));
-				rewardHistory.setRewardTransactionTime(rs.getDate(3));
-				rewardHistory.setRewardUserId(rs.getInt(4));
+				rewardHistory.setRewardTransactionTime(rs.getTimestamp(3));
+				rewardHistory.setRewardUserId(rs.getString(4));
 				rewardHistory.setUserCardNumber(rs.getString(5));
 				rewardHistory.setRewardAmount(rs.getDouble(6));
 				rewardHistory.setFinalAmount(rs.getDouble(7));
@@ -239,6 +261,53 @@ public class MySQLConnection extends RemoteServiceServlet {
 		}
 
 		return result;
+	}
+
+	public String setRewardHistory(GetRewardHistory record) {
+
+		// Window.alert("here 4");
+		try {
+			PreparedStatement ps = conn.prepareStatement(
+					"insert into cap_reward_history (REWARD_ID,REWARD_DESCRIPTION,REWARD_TRANSACTION_TIME,REWARD_USER_ID,REWARD_AMOUNT,REWARD_FINAL_AMOUNT,REWARD_APPLIED,REWARD_TOKEN_INDEX) values (?,?,?,?,?,?,?,?)");
+
+			ps.setString(1, record.getId());
+			ps.setString(2, record.getRewardDescription());
+			ps.setTimestamp(3, record.getRewardTransactionTime());
+			ps.setString(4, record.getRewardUserId());
+			ps.setDouble(5, record.getRewardAmount());
+			ps.setDouble(6, record.getFinalAmount());
+			ps.setBoolean(7, record.isRewardApplied());
+			ps.setInt(8, record.getTokenIndex());
+
+			ps.execute();
+
+			ps.close();
+
+		} catch (SQLException sqle) {
+			// do stuff on fail
+		}
+
+		return "History record added";
+	}
+
+	public String updateRewardHistory(String userId) {
+
+		// Window.alert("here 4");
+		try {
+			PreparedStatement ps = conn
+					.prepareStatement("update cap_reward_history set reward_applied = true where reward_user_id = ?");
+
+			ps.setString(1, userId);
+
+			ps.execute();
+
+			ps.close();
+
+		} catch (SQLException sqle) {
+			// do stuff on fail
+		}
+
+		return "History records updated";
 	}
 
 	/**
