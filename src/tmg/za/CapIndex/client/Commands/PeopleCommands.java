@@ -7,7 +7,6 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.view.client.SelectionChangeEvent;
@@ -78,7 +77,7 @@ public class PeopleCommands {
 							public void onSelectionChange(SelectionChangeEvent event) {
 								GetAdminUser selected = selectionModel.getSelectedObject();
 								if (selected != null) {
-									Window.alert("You selected: " + selected.getUsername());
+									// Window.alert("You selected: " + selected.getUsername());
 								}
 							}
 						});
@@ -152,7 +151,7 @@ public class PeopleCommands {
 								return String.valueOf(object.getLoyaltyCredit());
 							}
 						};
-						table.addColumn(loyaltyColumn, "Loyalty Balance");
+						table.addColumn(loyaltyColumn, "Loyalty Balance (USD)");
 
 						// Add a selection model to handle user selection.
 						final SingleSelectionModel<GetUser> selectionModel = new SingleSelectionModel<GetUser>();

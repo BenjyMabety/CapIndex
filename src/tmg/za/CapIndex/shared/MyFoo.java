@@ -13,6 +13,9 @@ public class MyFoo extends Widget {
 		String enabledSpace();
 	}
 
+	/**
+	 * 
+	 */
 	public MyFoo() {
 	}
 

@@ -153,7 +153,7 @@ public class MySQLConnection extends RemoteServiceServlet {
 		ArrayList<GetUser> result = new ArrayList<GetUser>();
 		try {
 			PreparedStatement ps = conn.prepareStatement(
-					"select  USER_FIRST_NAME,USER_LAST_NAME,USER_CARD_NUMBER,USER_BANK_ID,USER_LOYALTY_CREDIT,BANK_NAME from CAP_USER,CAP_BANK where CAP_USER.USER_BANK_ID = CAP_BANK.Bank_ID");
+					"select  USER_FIRST_NAME,USER_LAST_NAME,USER_CARD_NUMBER,USER_BANK_ID,USER_LOYALTY_CREDIT,BANK_NAME,USER_ID from CAP_USER,CAP_BANK where CAP_USER.USER_BANK_ID = CAP_BANK.Bank_ID order by 1");
 
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
@@ -164,6 +164,7 @@ public class MySQLConnection extends RemoteServiceServlet {
 				user.setBankID(rs.getInt(4));
 				user.setLoyaltyCredit(rs.getDouble(5));
 				user.setBankName(rs.getString(6));
+				user.setId(rs.getString(7));
 				result.add(user);
 
 			}
@@ -176,6 +177,10 @@ public class MySQLConnection extends RemoteServiceServlet {
 		return result;
 	}
 
+	/**
+	 * @param user
+	 * @return
+	 */
 	public ArrayList<GetUser> setUser(GetUser user) {
 		try {
 			PreparedStatement ps = conn.prepareStatement(
@@ -236,7 +241,7 @@ public class MySQLConnection extends RemoteServiceServlet {
 		ArrayList<GetRewardHistory> result = new ArrayList<GetRewardHistory>();
 		try {
 			PreparedStatement ps = conn.prepareStatement(
-					"select REWARD_ID,REWARD_DESCRIPTION,REWARD_TRANSACTION_TIME,REWARD_USER_ID,USER_CARD_NUMBER,REWARD_AMOUNT,REWARD_FINAL_AMOUNT,REWARD_APPLIED,REWARD_TOKEN_INDEX FROM CAP_REWARD_HISTORY,CAP_USER where REWARD_USER_ID=USER_ID");
+					"select REWARD_ID,REWARD_DESCRIPTION,REWARD_TRANSACTION_TIME,REWARD_USER_ID,USER_CARD_NUMBER,REWARD_AMOUNT,REWARD_FINAL_AMOUNT,REWARD_APPLIED,REWARD_TOKEN_INDEX FROM CAP_REWARD_HISTORY,CAP_USER where REWARD_USER_ID=USER_ID order by REWARD_TRANSACTION_TIME desc");
 
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
@@ -263,6 +268,10 @@ public class MySQLConnection extends RemoteServiceServlet {
 		return result;
 	}
 
+	/**
+	 * @param record
+	 * @return
+	 */
 	public String setRewardHistory(GetRewardHistory record) {
 
 		// Window.alert("here 4");
@@ -290,6 +299,10 @@ public class MySQLConnection extends RemoteServiceServlet {
 		return "History record added";
 	}
 
+	/**
+	 * @param userId
+	 * @return
+	 */
 	public String updateRewardHistory(String userId) {
 
 		// Window.alert("here 4");

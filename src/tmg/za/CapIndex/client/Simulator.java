@@ -28,6 +28,9 @@ import tmg.za.CapIndex.client.data.GetState;
 import tmg.za.CapIndex.client.data.GetUser;
 import tmg.za.CapIndex.shared.StringUtils;
 
+/**
+ * 
+ */
 public class Simulator extends Composite {
 
 	private final static LocationServiceAsync locationService = GWT.create(LocationService.class);
@@ -35,33 +38,36 @@ public class Simulator extends Composite {
 	private final static PeopleServiceAsync peopleService = GWT.create(PeopleService.class);
 
 	private int units = 0;
-	private GetCountry country;
-	private String countryValue;
 	private String stateValue;
 	private GetCapIndex selectedIndex;
 	private GetRewardHistory historyRecord;
+	private GetUser selectedUser = new GetUser();
 	ArrayList<GetCountry> countries = new ArrayList<GetCountry>();
 	ArrayList<GetState> states = new ArrayList<GetState>();
 	ArrayList<GetCapIndex> index = new ArrayList<GetCapIndex>();
 	ArrayList<GetBank> banks = new ArrayList<GetBank>();
+	ArrayList<GetUser> users = new ArrayList<GetUser>();
 
 	TextBox tbCup = new TextBox();
 	PushButton enterButton = new PushButton("Enter");
 	PushButton enterButtonQ2 = new PushButton("Enter");
 	PushButton enterButtonQ3 = new PushButton("Enter");
-	PushButton enterButtonQ4 = new PushButton("Submit");
+	PushButton submitButton = new PushButton("Submit");
 
-	VerticalPanel vp = new VerticalPanel();
-	SimplePanel panel = new SimplePanel();
+	VerticalPanel vpDisplay = new VerticalPanel();
+	SimplePanel canvasPanel = new SimplePanel();
 	ListBox lbCountry = new ListBox();
 	ListBox lbState = new ListBox();
 	ListBox lbCityName = new ListBox();
-	TextBox firstName = new TextBox();
-	TextBox lastName = new TextBox();
-	TextBox cardNumber = new TextBox();
+	TextBox lbFirstName = new TextBox();
+	TextBox lbLastName = new TextBox();
+	TextBox lbCardNumber = new TextBox();
 	ListBox lbBank = new ListBox();
-	ListBox applyLoyalty = new ListBox();
+	ListBox lbLoyalty = new ListBox();
 
+	/**
+	 * 
+	 */
 	public Simulator() {
 
 		enterButton.addClickHandler(new ClickHandler() {
@@ -69,7 +75,7 @@ public class Simulator extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				units = Integer.valueOf(tbCup.getValue());
-				vp.clear();
+				vpDisplay.clear();
 				startQ2();
 
 			}
@@ -79,8 +85,7 @@ public class Simulator extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				countryValue = lbCountry.getSelectedValue();
-				vp.clear();
+				vpDisplay.clear();
 				startQ3();
 
 			}
@@ -95,27 +100,25 @@ public class Simulator extends Composite {
 						selectedIndex = i;
 					}
 				}
-				vp.clear();
+				vpDisplay.clear();
 				startQ4();
 
 			}
 		});
-		enterButtonQ4.addClickHandler(new ClickHandler() {
+		submitButton.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
 				GetUser user = new GetUser();
-				user.setId(
-						StringUtils.getMd5(firstName.getValue() + " " + lastName.getValue() + cardNumber.getValue()));
-				user.setFirstName(firstName.getValue());
-				user.setLastName(lastName.getValue());
-				user.setCardNumber(cardNumber.getValue());
+				user.setId(StringUtils
+						.getMd5(lbFirstName.getValue() + " " + lbLastName.getValue() + lbCardNumber.getValue()));
+				user.setFirstName(lbFirstName.getValue());
+				user.setLastName(lbLastName.getValue());
+				user.setCardNumber(lbCardNumber.getValue());
 				user.setBankID(Integer.valueOf(lbBank.getSelectedValue()));
-				if (applyLoyalty.getSelectedIndex() == 1) {
-					Window.alert("minus");
-					user.setLoyaltyCredit(-1.2);
+				if (lbLoyalty.getSelectedIndex() == 1) {
+					user.setLoyaltyCredit(-selectedUser.getLoyaltyCredit());
 				} else {
-					Window.alert("plus");
 					user.setLoyaltyCredit(0.2);
 				}
 				peopleService.setUser(user, new AsyncCallback<ArrayList<GetUser>>() {
@@ -127,20 +130,19 @@ public class Simulator extends Composite {
 
 					@Override
 					public void onSuccess(ArrayList<GetUser> result) {
-						if (applyLoyalty.getSelectedIndex() == 1) {
-							Window.alert("here 1");
+						users = result;
+						if (lbLoyalty.getSelectedIndex() == 1) {
 							updateHistoryRecords(user);
 
 						} else {
-							Window.alert("here 2");
 							insertHistoryRecord(user);
 						}
-
+						// reloadSim();
 					}
 
 				});
-				vp.clear();
-				vp.add(new Label("Thank you for your service!"));
+				vpDisplay.clear();
+				vpDisplay.add(new Label("Thank you for your service!"));
 
 			}
 		});
@@ -149,7 +151,6 @@ public class Simulator extends Composite {
 
 			@Override
 			public void onChange(ChangeEvent event) {
-				// Window.alert(lbState.getSelectedValue());
 				filterCity(lbState.getSelectedValue());
 
 			}
@@ -165,7 +166,9 @@ public class Simulator extends Composite {
 			public void onSuccess(ArrayList<GetCountry> result) {
 
 				for (GetCountry country : result) {
-					lbCountry.addItem(country.getCountryName(), String.valueOf(country.getId()));
+					if (country.getId() == 1) {
+						lbCountry.addItem(country.getCountryName(), String.valueOf(country.getId()));
+					}
 				}
 			}
 		});
@@ -202,14 +205,47 @@ public class Simulator extends Composite {
 			}
 		});
 
+		peopleService.getUsers(new AsyncCallback<ArrayList<GetUser>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+
+			}
+
+			@Override
+			public void onSuccess(ArrayList<GetUser> result) {
+				users = result;
+
+			}
+		});
+
 		lbCityName.addItem("Which City?");
 	}
 
+	/*
+	 * protected void reloadSim() { peopleService.getUsers(new
+	 * AsyncCallback<ArrayList<GetUser>>() {
+	 * 
+	 * @Override public void onFailure(Throwable caught) {
+	 * 
+	 * }
+	 * 
+	 * @Override public void onSuccess(ArrayList<GetUser> result) { users = result;
+	 * 
+	 * } }); tbCup.setValue(""); lbCountry.setSelectedIndex(0);
+	 * lbState.setSelectedIndex(0); lbCityName.clear(); lbFirstName.setValue("");
+	 * lbLastName.setValue(""); lbCardNumber.setValue("");
+	 * lbBank.setSelectedIndex(0); lbLoyalty.setSelectedIndex(0);
+	 * 
+	 * }
+	 */
+
+	/**
+	 * @param selectedValue
+	 */
 	protected void filterCity(String selectedValue) {
 		lbCityName.clear();
-		// Window.alert(index.size() + "");
 		for (GetCapIndex indexItem : index) {
-			// Window.alert(selectedValue + " vs " + indexItem.getStateId());
 			if (String.valueOf(indexItem.getStateId()) == selectedValue) {
 				lbCityName.addItem(indexItem.getCityName(), String.valueOf(indexItem.getId()));
 			}
@@ -217,6 +253,9 @@ public class Simulator extends Composite {
 
 	}
 
+	/**
+	 * @param user
+	 */
 	private void insertHistoryRecord(GetUser user) {
 		historyRecord = new GetRewardHistory();
 		historyRecord.setRewardDescription(tbCup.getValue() + " cups- Cappuccino");
@@ -238,16 +277,16 @@ public class Simulator extends Composite {
 
 			@Override
 			public void onSuccess(String result) {
-				// Window.alert("Here 5");
 				Window.alert(result);
 			}
 		});
 
 	}
 
+	/**
+	 * @param user
+	 */
 	private void updateHistoryRecords(GetUser user) {
-		// TODO Auto-generated method stub
-		Window.alert("here 3");
 		adminService.updateRewardHistory(user.getId(), new AsyncCallback<String>() {
 
 			@Override
@@ -257,56 +296,67 @@ public class Simulator extends Composite {
 
 			@Override
 			public void onSuccess(String result) {
-				// Window.alert("Here 5");
 				Window.alert(result);
 			}
 		});
 
 	}
 
+	/**
+	 * @param panel
+	 */
 	public void start(SimplePanel panel) {
 
-		vp.clear();
-		this.panel = panel;
+		vpDisplay.clear();
+		this.canvasPanel = panel;
 		Label greeting = new Label("Hi! My name is Sim. May I take your order please?");
-		vp.add(greeting);
+		vpDisplay.add(greeting);
 		HorizontalPanel inputCup = new HorizontalPanel();
 		Label cup = new Label("Cappuccino Unit(s)");
 		inputCup.add(tbCup);
 		inputCup.add(cup);
-		vp.add(inputCup);
-		vp.add(enterButton);
-		this.panel.add(vp);
+		vpDisplay.add(inputCup);
+		vpDisplay.add(enterButton);
+		this.canvasPanel.add(vpDisplay);
 
 	}
 
+	/**
+	 * 
+	 */
 	protected void startQ2() {
 		Label tellMe = new Label("Tell me, where are you from buddy?");
 		HorizontalPanel hp = new HorizontalPanel();
 		Label from = new Label("I'm from: ");
 		hp.add(from);
 		hp.add(lbCountry);
-		vp.add(tellMe);
-		vp.add(hp);
-		vp.add(enterButtonQ2);
-		panel.add(vp);
+		vpDisplay.add(tellMe);
+		vpDisplay.add(hp);
+		vpDisplay.add(enterButtonQ2);
+		canvasPanel.add(vpDisplay);
 
 	}
 
+	/**
+	 * 
+	 */
 	protected void startQ3() {
-		Label forReal = new Label("For real? Which Where?");
+		Label forReal = new Label("For real? Where?");
 		HorizontalPanel hp = new HorizontalPanel();
 		Label from = new Label("Straight out of: ");
 		hp.add(from);
 		hp.add(lbState);
 		hp.add(lbCityName);
-		vp.add(forReal);
-		vp.add(hp);
-		vp.add(enterButtonQ3);
-		panel.add(vp);
+		vpDisplay.add(forReal);
+		vpDisplay.add(hp);
+		vpDisplay.add(enterButtonQ3);
+		canvasPanel.add(vpDisplay);
 
 	}
 
+	/**
+	 * 
+	 */
 	protected void startQ4() {
 		Label sweet = new Label("Sweet! Cool so your Cappuccinno order of " + units + " will cost :R" + getTotalPrice()
 				+ " since it costs R" + getZarPrice() + " for one. Your have acquired a Tourism Token: "
@@ -315,17 +365,17 @@ public class Simulator extends Composite {
 		Label firstNameLabel = new Label("First Name:");
 		HorizontalPanel firstPanel = new HorizontalPanel();
 		firstPanel.add(firstNameLabel);
-		firstPanel.add(firstName);
+		firstPanel.add(lbFirstName);
 
 		Label lastNameLabel = new Label("Last Name:");
 		HorizontalPanel lastPanel = new HorizontalPanel();
 		lastPanel.add(lastNameLabel);
-		lastPanel.add(lastName);
+		lastPanel.add(lbLastName);
 
 		Label cardNumberLabel = new Label("Card Number:");
 		HorizontalPanel cardPanel = new HorizontalPanel();
 		cardPanel.add(cardNumberLabel);
-		cardPanel.add(cardNumber);
+		cardPanel.add(lbCardNumber);
 
 		Label bankLabel = new Label("Bank");
 		HorizontalPanel bankPanel = new HorizontalPanel();
@@ -335,53 +385,80 @@ public class Simulator extends Composite {
 		Label loyaltyLabel = new Label("Apply Loyalty (Yes/No)");
 		HorizontalPanel loyaltyPanel = new HorizontalPanel();
 		loyaltyPanel.add(loyaltyLabel);
-		applyLoyalty.addItem("Nothing Selected");
-		applyLoyalty.addItem("Yes");
-		applyLoyalty.addItem("No");
-		applyLoyalty.addChangeHandler(new ChangeHandler() {
+		lbLoyalty.clear();
+		lbLoyalty.addItem("Nothing Selected");
+		lbLoyalty.addItem("Yes");
+		lbLoyalty.addItem("No");
+		lbLoyalty.addChangeHandler(new ChangeHandler() {
 
 			@Override
 			public void onChange(ChangeEvent event) {
-				// TODO Auto-generated method stub
-				if (applyLoyalty.getSelectedIndex() == 1) {
-
+				if (lbLoyalty.getSelectedIndex() == 1) {
+					checkUserLoyalty();
+					Window.alert("Your loyalty balance is: " + selectedUser.getLoyaltyCredit() + " USD. R"
+							+ selectedUser.getLoyaltyCredit() * 18.5 + " will be deducted from your total price of: R"
+							+ getTotalPrice() + " Your final price is now: R"
+							+ (getTotalPrice() - selectedUser.getLoyaltyCredit() * 18.5));
+					if (selectedUser.getLoyaltyCredit() == 0) {
+						lbLoyalty.setSelectedIndex(2);
+					}
 				}
 
 			}
 		});
-		loyaltyPanel.add(applyLoyalty);
+		loyaltyPanel.add(lbLoyalty);
 
-		vp.add(sweet);
-		vp.add(firstPanel);
-		vp.add(lastPanel);
-		vp.add(cardPanel);
-		vp.add(bankPanel);
-		vp.add(loyaltyPanel);
-		vp.add(enterButtonQ4);
-		panel.add(vp);
+		vpDisplay.add(sweet);
+		vpDisplay.add(firstPanel);
+		vpDisplay.add(lastPanel);
+		vpDisplay.add(cardPanel);
+		vpDisplay.add(bankPanel);
+		vpDisplay.add(loyaltyPanel);
+		vpDisplay.add(submitButton);
+		canvasPanel.add(vpDisplay);
 
 	}
 
+	/**
+	 * 
+	 */
+	protected void checkUserLoyalty() {
+		for (GetUser user : users) {
+			if (user.getId().equals(StringUtils
+					.getMd5(lbFirstName.getValue() + " " + lbLastName.getValue() + lbCardNumber.getValue()))) {
+				selectedUser = user;
+				break;
+
+			}
+		}
+
+	}
+
+	/**
+	 * @return
+	 */
 	private String getTourismToken() {
-		// TODO Auto-generated method stub
 		return selectedIndex.getTourismToken();
 	}
 
-	// Get via cityname and state what the price is as args for this method
+	/**
+	 * @return
+	 */
 	private String getZarPrice() {
-		// TODO Auto-generated method stub
-
 		return selectedIndex.getPriceZar();
 	}
 
+	/**
+	 * @return
+	 */
 	private double getTotalPrice() {
-		// TODO Auto-generated method stub
-
 		return Double.valueOf(selectedIndex.getPriceZar()) * units;
 	}
 
+	/**
+	 * @param index
+	 */
 	public void setIndex(ArrayList<GetCapIndex> index) {
-		// Window.alert(("F" + "from main: " + index.size()));
 		this.index = index;
 	}
 

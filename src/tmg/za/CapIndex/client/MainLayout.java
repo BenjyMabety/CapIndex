@@ -53,7 +53,7 @@ public class MainLayout extends Composite {
 	Image edit;
 	Image save;
 	Image buy;
-	Simulator sim = new Simulator();
+	Simulator sim;
 
 	/**
 	 * 
@@ -101,9 +101,7 @@ public class MainLayout extends Composite {
 					menu.setVisible(true);
 					home.setVisible(true);
 					edit.setVisible(true);
-					if (login.getUser().getUserId() == 1) {
-						buy.setVisible(true);
-					}
+					buy.setVisible(true);
 					save.setVisible(true);
 					mainPanel.add(home);
 					mainPanel.add(edit);
@@ -159,7 +157,7 @@ public class MainLayout extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				canvas.clear();
-				// Window.alert("lOOK at My SIZE: " + adminCommands.getIndex().size() + "");
+				sim = new Simulator();
 				sim.setIndex(adminCommands.getIndex());
 				sim.start(canvas);
 

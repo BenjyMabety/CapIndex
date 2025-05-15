@@ -10,7 +10,6 @@ import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.view.client.SelectionChangeEvent;
@@ -30,6 +29,9 @@ public class AdminCommands {
 	ArrayList<GetCapIndex> updates = new ArrayList<GetCapIndex>();
 	ArrayList<GetCapIndex> index = new ArrayList<GetCapIndex>();
 
+	/**
+	 * 
+	 */
 	public AdminCommands() {
 
 	}
@@ -159,7 +161,7 @@ public class AdminCommands {
 								return String.valueOf(object.getRewardAmount());
 							}
 						};
-						table.addColumn(rewardAmount, "Reward Amount");
+						table.addColumn(rewardAmount, "Reward Amount (USD)");
 
 						TextColumn<GetRewardHistory> finalAmount = new TextColumn<GetRewardHistory>() {
 							@Override
@@ -167,7 +169,7 @@ public class AdminCommands {
 								return String.valueOf(object.getFinalAmount());
 							}
 						};
-						table.addColumn(finalAmount, "Final Amount");
+						table.addColumn(finalAmount, "Final Amount (R)");
 
 						TextColumn<GetRewardHistory> appliedColumn = new TextColumn<GetRewardHistory>() {
 							@Override
@@ -207,7 +209,7 @@ public class AdminCommands {
 							public void onSelectionChange(SelectionChangeEvent event) {
 								GetRewardHistory selected = selectionModel.getSelectedObject();
 								if (selected != null) {
-									Window.alert("You selected: " + selected.getRewardDescription());
+									// Window.alert("You selected: " + selected.getRewardDescription());
 								}
 							}
 						});
@@ -242,7 +244,6 @@ public class AdminCommands {
 				CellTable<GetCapIndex> table = new CellTable<GetCapIndex>();
 				table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
-				// Add a text column to show the name.
 				if (edit) {
 					bind(table);
 				} else {

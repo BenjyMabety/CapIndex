@@ -29,7 +29,6 @@ public class PeopleServiceImpl extends RemoteServiceServlet implements PeopleSer
 
 	@Override
 	public ArrayList<GetUser> setUser(GetUser user) {
-		// TODO Auto-generated method stub
 		return conn.setUser(user);
 	}
 

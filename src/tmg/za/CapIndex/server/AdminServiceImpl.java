@@ -39,13 +39,11 @@ public class AdminServiceImpl extends RemoteServiceServlet implements AdminServi
 
 	@Override
 	public String setRewardHistory(GetRewardHistory record) {
-		// TODO Auto-generated method stub
 		return conn.setRewardHistory(record);
 	}
 
 	@Override
 	public String updateRewardHistory(String userId) {
-		// TODO Auto-generated method stub
 		return conn.updateRewardHistory(userId);
 	}
 

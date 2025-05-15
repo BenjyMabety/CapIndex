@@ -35,7 +35,6 @@ public class StringUtils {
 	}
 
 	public static Timestamp nget(Timestamp timestamp) {
-		// TODO Auto-generated method stub
 		if (timestamp == null) {
 			return new Timestamp(0);
 		}
