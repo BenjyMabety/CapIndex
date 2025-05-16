@@ -1,0 +1,2 @@
+serviceClass: tmg.za.CapIndex.client.PeopleService
+path: D3F043244A4A047E630BBBD427D3AECE.gwt.rpc

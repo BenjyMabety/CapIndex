@@ -1,0 +1,2 @@
+serviceClass: tmg.za.CapIndex.client.AdminService
+path: DA0EC3206C50ECB79DA12310913339F8.gwt.rpc
